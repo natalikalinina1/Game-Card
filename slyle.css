@@ -1,4 +1,8 @@
-
+@font-face {
+    font-family: 'StratosSkyeng';
+    src: url("./Web-fonts/stratosskyengweb-regular.woff");
+    
+}
 body {
     margin: 0;
     padding: 0;
@@ -35,8 +39,6 @@ h1 {
     width: 80%;
     margin-top: 52px;
     align-items: center;
-    
-
 
     
  
@@ -80,6 +82,11 @@ h1 {
     line-height: 32px;
     font-feature-settings: 'pnum' on, 'lnum' on;
     color: #FFFFFF;
+    transition: all 3s;
 }
 
+.start:hover {
+    transition: all 1s;
+    background: #0080C1;
+}
 
