@@ -12,60 +12,62 @@ body {
     height: 100vh;
     background-color:  #004980;
 }
-.container {
+.level__container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 480px;
-    height: 459px;
-    padding: 20px;
+    padding: 44px 72px;
     background: #C2F5FF;
     border-radius: 12px;
+    gap: 48px;
 }
-h1 {
+.level__text {
     font-family: 'StratosSkyeng';
     font-style: normal;
     font-weight: 400;
     font-size: 40px;
     line-height: 48px;
     text-align: center;
-    font-feature-settings: 'pnum' on, 'lnum' on;
     color: #004980;
+    width: 208px;
 }
-.numbers {
+.level__form {
     display: flex;
-    justify-content: space-between;
-    width: 80%;
-    margin-top: 52px;
+    flex-direction: column;
     align-items: center;
-
-    
- 
-   
-}
-.number {
-
-    width: 98px;
-    height: 98px;
+    gap: 68px;
+  }
+.level__value-gap {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 48px;
-    font-weight: bold;
-    cursor: pointer;
-    background: #FFFFFF;
-    border-radius: 12px;
-    font-family: 'StratosSkyeng';
+    gap: 30px;
+  }
+.level__value {
+    font-family: "StratosSkyeng";
+    border: none;
     font-style: normal;
     font-weight: 400;
     font-size: 64px;
     line-height: 72px;
-    color: #0080C1;
-    margin-top: -26px;
-   
-   
-}
+    color: #0080c1;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+.level__value input[type=radio] {
+    display: none;
+  }
+.level__value span {
+    padding: 13px 33px;
+    background: #ffffff;
+    border-radius: 12px;
+  }
+.level__value input[type=radio]:checked + span {
+    border: 3px solid #004980;
+    border-radius: 12px;
+  }
+.level__value:hover {
+    transform: scale(1.1);}
+    
 .start {
     background: #7AC100;
     border-radius: 12px;
@@ -74,7 +76,7 @@ h1 {
     padding: 10px 20px;
     border: none;
     cursor: pointer;
-    margin-top: 60px;
+    margin-top: 20px;
     font-family: 'StratosSkyeng';
     font-style: normal;
     font-weight: 400;
