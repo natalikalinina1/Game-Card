@@ -70,7 +70,7 @@ game.innerHTML = gameClosedCards;
 
         // Запускаем таймер
         let time = 0;
-        const gameTimer = setInterval(() => {
+        let gameTimer = setInterval(() => {
             time++;
 
             const minutes = Math.floor(time / 60).toString().padStart(2, '0');
@@ -78,7 +78,13 @@ game.innerHTML = gameClosedCards;
 
             const gameTimerElement = document.querySelector('.game__time');
             gameTimerElement.textContent = `${minutes}.${seconds}`;
-        }, 1000);
-		
-        
+       
+        //пока просто обнуляем таймер по кнопке-Начать заново
+        const buttonOver = document.querySelector('.buttonOver');
+        buttonOver.addEventListener('click', () => {
+            time = 0;
+            gameTimerElement.textContent = '00.00';
+            clearInterval(gameTimer);
+        })
+    }, 1000);
       
