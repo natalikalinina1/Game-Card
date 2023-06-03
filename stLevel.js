@@ -1,6 +1,5 @@
 
 import {level} from "./game-card.js";
-
 export const renderstLevel = (game) => {
     const stLevelHtml = `<div class=" level__container">
     <h2 class="level__text"> Сложность: ${level} !</h2> </div>`;
@@ -47,8 +46,8 @@ export const renderstLevel = (game) => {
              <div class="game__cards-item"></div>
              </div>`
     }, 1200);
-}
 
+}
 const gameHeader =
     ` <div class="game__header">
     <div class="game__time-box">
@@ -58,7 +57,7 @@ const gameHeader =
     </div>
     <div class="game__time"> </div>
     </div>
-     <div class="buttonOver"> Начать заново </div>
+ <button class="buttonOver"> Начать заново </button>
     </div>`; 
 
 const gameClosedCards = `
@@ -81,5 +80,5 @@ game.innerHTML = gameClosedCards;
             gameTimerElement.textContent = `${minutes}.${seconds}`;
         }, 1000);
 		
-		
-   
+        
+      
