@@ -1,94 +1,158 @@
 @font-face {
-    font-family: 'StratosSkyeng';
-    src: url("./Web-fonts/stratosskyengweb-regular.woff");
-    
+  font-family: 'StratosSkyeng';
+  src: url("./Web-fonts/stratosskyengweb-regular.woff");
+  
 }
 body {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color:  #004980;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color:  #004980;
 }
 .level__container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 44px 72px;
-    background: #C2F5FF;
-    border-radius: 12px;
-    gap: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 44px 72px;
+  background: #C2F5FF;
+  border-radius: 12px;
+  gap: 48px;
 }
 .level__text {
-    font-family: 'StratosSkyeng';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 40px;
-    line-height: 48px;
-    text-align: center;
-    color: #004980;
-    width: 208px;
+  font-family: 'StratosSkyeng';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 48px;
+  text-align: center;
+  color: #004980;
+  width: 208px;
 }
 .level__form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 68px;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 68px;
+}
 .level__value-gap {
-    display: flex;
-    gap: 30px;
-  }
+  display: flex;
+  gap: 30px;
+}
 .level__value {
-    font-family: "StratosSkyeng";
-    border: none;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 64px;
-    line-height: 72px;
-    color: #0080c1;
-    cursor: pointer;
-    transition: transform 0.3s;
-  }
+  font-family: "StratosSkyeng";
+  border: none;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 64px;
+  line-height: 72px;
+  color: #0080c1;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
 .level__value input[type=radio] {
-    display: none;
-  }
+  display: none;
+}
 .level__value span {
-    padding: 13px 33px;
-    background: #ffffff;
-    border-radius: 12px;
-  }
+  padding: 13px 33px;
+  background: #ffffff;
+  border-radius: 12px;
+}
 .level__value input[type=radio]:checked + span {
-    border: 3px solid #004980;
-    border-radius: 12px;
-  }
+  border: 3px solid #004980;
+  border-radius: 12px;
+}
 .level__value:hover {
-    transform: scale(1.1);}
-    
+  transform: scale(1.1);}
+  
 .start {
-    background: #7AC100;
-    border-radius: 12px;
-    width: 246px;
-    height: 50px;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    margin-top: 20px;
-    font-family: 'StratosSkyeng';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 24px;
-    line-height: 32px;
-    font-feature-settings: 'pnum' on, 'lnum' on;
-    color: #FFFFFF;
-    transition: all 3s;
+  background: #7AC100;
+  border-radius: 12px;
+  width: 246px;
+  height: 50px;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  margin-top: 20px;
+  font-family: 'StratosSkyeng';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 32px;
+  font-feature-settings: 'pnum' on, 'lnum' on;
+  color: #FFFFFF;
+  transition: all 3s;
 }
 
 .start:hover {
-    transition: all 1s;
-    background: #0080C1;
+  transition: all 1s;
+  background: #0080C1;
 }
 
+.game__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.game__time-box {
+  padding-bottom: 48px;
+  width: 155px;
+  
+ 
+}
+.game__time {
+  font-weight: 400;
+  font-size: 64px;
+  color: #ffffff;
+  line-height: 12px;
+
+  
+}
+.game__text-box {
+  display: flex;
+  gap: 67px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 400;
+  padding-bottom: 20px;
+  padding-left: 10px;
+}
+.game__cards {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 15px;
+}
+.game__cards-item {
+  width: 95px;
+  height: 133px;
+  background-image: url(./img/cards/рубашка.jpg);
+  border-radius: 4px;
+  border-style: none;
+}
+.game__cards-item:hover {
+  transform: scale(1.1);
+}
+.buttonOver {
+  background: #7ac100;
+  border-radius: 12px;
+  width: 246px;
+  height: 50px;
+  font-family: 'StratosSkyeng';
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 32px;
+  margin-bottom: 48px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-style: none;
+  cursor: pointer;
+}
+
+.buttonOver:active {
+  background: hwb(207 42% 5%/0.582);
+}
