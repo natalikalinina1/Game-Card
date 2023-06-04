@@ -23,14 +23,14 @@ formHelloLevel.addEventListener("input", () => {
     btnStart.disabled = document.querySelector('input[name="level"]:checked').value === ""
 });
 
-
+ let level = 0;
 btnStart.addEventListener('click', () => {
     level = document.querySelector('input[name="level"]:checked').value;
-    if (level === "1") {
+    if (level === 1) {
         renderstLevel(game);
-    } else if (level === "2") {
+    } else if (level === 2) {
         renderstLevel(game);
-    } else if (level === "3") {
+    } else if (level === 3) {
         renderstLevel(game);
     }
 });
