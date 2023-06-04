@@ -1,8 +1,8 @@
 
-import {level} from "./game-card.js";
-export const renderstLevel = (game) => {
-    const stLevelHtml = `<div class=" level__container">
-    <h2 class="level__text"> Сложность: ${level} !</h2> </div>`;
+export const renderstLevel = (game, level) => {
+    const stLevelHtml = `<div class="level__container">
+        <h2 class="level__text"> Сложность: ${level} !</h2>
+    </div>`;
 
     game.innerHTML = stLevelHtml;
 
