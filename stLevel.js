@@ -68,7 +68,7 @@ const gameClosedCards = `
     </div>`;
 game.innerHTML = gameClosedCards;
 
-        // Запускаем таймер
+       // Запускаем таймер
         let time = 0;
         let gameTimer = setInterval(() => {
             time++;
