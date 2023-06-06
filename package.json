@@ -1,0 +1,22 @@
+{
+  "name": "game-card",
+  "version": "1.0.0",
+  "description": "",
+  "main": "game-card.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/natalikalinina1/Game-Card.git"
+  },
+  "author": "Natalia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/natalikalinina1/Game-Card/issues"
+  },
+  "homepage": "https://github.com/natalikalinina1/Game-Card#readme",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
+}
