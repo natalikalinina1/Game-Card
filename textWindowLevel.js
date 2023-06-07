@@ -1,4 +1,3 @@
-
 export const renderTextLevel = (game) => {
 
     const textLevelHtml = `<div class="level__container">
@@ -23,5 +22,4 @@ export const renderTextLevel = (game) => {
     </div>`;
 
     game.innerHTML = textLevelHtml;
-
 };
