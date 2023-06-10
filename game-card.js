@@ -1,38 +1,36 @@
-
-import { renderTextLevel } from "./textWindowLevel.js";
-import { renderstLevel} from "./stLevel.js";
+import { renderTextLevel } from './textWindowLevel.js'
+import { renderstLevel } from './stLevel.js'
 const game = document.getElementById('game')
 const renderGame = () => {
-	renderTextLevel(game);
-};
+    renderTextLevel(game)
+}
 
 const handleSubmit = (event) => {
-    event.preventDefault();
-    let level = document.querySelector('input[name="level"]:checked').value;
-    renderstLevel(game, level);
-};
+    event.preventDefault()
+    let level = document.querySelector('input[name="level"]:checked').value
+    renderstLevel(game, parseInt(level))
+}
 
-renderGame();
+renderGame()
 
-const formHelloLevel = document.querySelector('.level__form');
-const btnStart = document.querySelector(".start");
+const formHelloLevel = document.querySelector('.level__form')
+const btnStart = document.querySelector('.start')
 
-formHelloLevel.addEventListener('submit', handleSubmit);
+formHelloLevel.addEventListener('submit', handleSubmit)
 
-formHelloLevel.addEventListener("input", () => {
-    btnStart.disabled = document.querySelector('input[name="level"]:checked').value === ""
-});
+formHelloLevel.addEventListener('input', () => {
+    btnStart.disabled =
+        document.querySelector('input[name="level"]:checked').value === ''
+})
 
- let level = 0;
+let level = 0
 btnStart.addEventListener('click', () => {
-    level = document.querySelector('input[name="level"]:checked').value;
-    if (level === 1) {
-        renderstLevel(game);
-    } else if (level === 2) {
-        renderstLevel(game);
-    } else if (level === 3) {
-        renderstLevel(game);
+    level = document.querySelector('input[name="level"]:checked').value
+    if (level === '1') {
+        renderstLevel(game, 6)
+    } else if (level === '2') {
+        renderstLevel(game, 12)
+    } else if (level === '3') {
+        renderstLevel(game, 16)
     }
-});
-
-
+})
