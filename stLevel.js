@@ -14,12 +14,12 @@ export const renderstLevel = (game, cardsCount) => {
     openCardsHtml += `
       <div class="game-go__cards-item" data-index="${i}">
         <img src="./img/cards/${randomCard}.png" alt="${randomCard}">
-        <p>${randomCard}</p>
+        
       </div>
     `;
     closedCardsHtml += `
       <div class="game-go__cards-item" data-index="${i}">
-        <p>?</p>
+        
       </div>
     `;
     cards.splice(cards.indexOf(randomCard), 1);
@@ -63,7 +63,7 @@ export const renderstLevel = (game, cardsCount) => {
         const selectedCard = cards[cardIndex];
         clickedCard.innerHTML = `
           <img src="./img/cards/${selectedCard}.png" alt="${selectedCard}">
-          <p>${selectedCard}</p>
+        
         `;
         if (previousCard === null) {
           previousCard = clickedCard; // если это первая открытая карта, сохраняем ее в переменную
