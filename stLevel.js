@@ -1,5 +1,4 @@
 
-
 export const renderstLevel = (game, cardsCount) => {
   let openCardsHtml = "";
   let closedCardsHtml = "";
@@ -12,11 +11,19 @@ export const renderstLevel = (game, cardsCount) => {
 
   for (let i = 0; i < cardsCount; i++) {
     const randomCard = cards[Math.floor(Math.random() * cards.length)];
-    openCardsHtml += `<div class="game-go__cards-item"><img src="./img/cards/${randomCard}.png" alt="${randomCard}"></div>`;
-    closedCardsHtml += `<div class="game-go__cards-item"></div>`;
+    openCardsHtml += `
+      <div class="game-go__cards-item" data-index="${i}">
+        <img src="./img/cards/${randomCard}.png" alt="${randomCard}">
+        <p>${randomCard}</p>
+      </div>
+    `;
+    closedCardsHtml += `
+      <div class="game-go__cards-item" data-index="${i}">
+        <p>?</p>
+      </div>
+    `;
     cards.splice(cards.indexOf(randomCard), 1);
   }
-
   const gameHeader = `
       <div class="game__header">
         <div class="game__time-box">
@@ -29,35 +36,69 @@ export const renderstLevel = (game, cardsCount) => {
         <button class="buttonOver"> Начать заново </button>
       </div>
     `;
-  const closedCards = `
+    const closedCards = `
     <div class="game-go">
       ${gameHeader}
       <div class="game-go__cards">
         ${closedCardsHtml}
       </div>
-    </div>
-  `;
+    </div>`;
   const openCards = `
     <div class="game-go">
       ${gameHeader}
       <div class="game-go__cards">
         ${openCardsHtml}
       </div>
-    </div>
-  `;
-  game.innerHTML = closedCards;
-  
+    </div>`;
+  game.innerHTML = openCards;
   setTimeout(() => {
-    game.innerHTML = openCards;
-    setTimeout(() => {
-      game.innerHTML = closedCards;
-    }, 5000);
-  }, 1200);
-  
+    game.innerHTML = closedCards;
+    const cardElements = document.querySelectorAll('.game-go__cards-item');
+    let previousCard = null; // переменная для хранения предыдущей открытой карты
+    let matchedCardsCount = 0; // переменная для подсчета количества уже совпавших карт
+    cardElements.forEach((card) => {
+      card.addEventListener('click', (event) => {
+        const clickedCard = event.currentTarget;
+        const cardIndex = clickedCard.getAttribute('data-index');
+        const selectedCard = cards[cardIndex];
+        clickedCard.innerHTML = `
+          <img src="./img/cards/${selectedCard}.png" alt="${selectedCard}">
+          <p>${selectedCard}</p>
+        `;
+        if (previousCard === null) {
+          previousCard = clickedCard; // если это первая открытая карта, сохраняем ее в переменную
+        } else {
+          const previousCardIndex = previousCard.getAttribute('data-index');
+          const previousCardValue = cards[previousCardIndex];
+          if (selectedCard.charAt(0) === previousCardValue.charAt(0)) { // если первая буква или число совпала с предыдущей, то удаляем обработчик клика и увеличиваем счетчик совпавших карт
+            previousCard.removeEventListener('click', () => {});
+            clickedCard.removeEventListener('click', () => {});
+            previousCard = null;
+            matchedCardsCount++;
+            if (matchedCardsCount === cardsCount/2) { // если все карты совпали, то выводим сообщение о победе
+              game.innerHTML = `
+                <div class="game-go">
+                  ${gameHeader}
+                  <div class="game-go__cards">
+                    <h2>Вы победили!</h2>
+                  </div>
+                </div>
+              `;
+            }
+          } else { // если буква или число не совпала, то закрываем обе открытые карты через некоторое время
+            setTimeout(() => {
+              previousCard.innerHTML = `
+              `;
+              clickedCard.innerHTML = ``;
+              previousCard = null;
+            }, 1000);
+          }
+        }
+      });
+    });
+  }, 3000);
+
 };
-
-
-
 // Запускаем таймер как только карты перевернулись
 let time = 0
 let gameTimer = setInterval(() => {
