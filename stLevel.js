@@ -120,4 +120,4 @@ export const renderstLevel = (game, cardsCount) => {
   }, 3000); 
 
 }
-// Запускаем таймер как только карты перевернулись
+
