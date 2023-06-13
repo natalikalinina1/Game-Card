@@ -100,7 +100,7 @@ export const renderstLevel = (game, cardsCount) => {
 
 };
 // Запускаем таймер как только карты перевернулись
-let time = 0
+/*let time = 0
 let gameTimer = setInterval(() => {
     time++
 
@@ -119,4 +119,4 @@ let gameTimer = setInterval(() => {
         gameTimerElement.textContent = '00.00'
         clearInterval(gameTimer)
     })
-}, 1000)
+}, 1000)*/
