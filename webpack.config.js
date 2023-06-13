@@ -38,7 +38,7 @@ module.exports = {
             filename: 'style.css',
         }),
         new CopyWebpackPlugin({
-            patterns: [{ from: 'img/cards', to: 'images' }],
+            patterns: [{ from: 'images', to: 'images' }],
         }),
     ],
     optimization: {

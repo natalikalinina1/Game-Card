@@ -33,7 +33,7 @@ export const renderstLevel = (game, cardsCount) => {
     const randomCard = cards[Math.floor(Math.random() * cards.length)];
     openCardsHtml += `
       <div class="game-go__cards-item" data-index="${i}">
-        <img src="./img/cards/${randomCard}.png" alt="${randomCard}">
+        <img src="./images/${randomCard}.png" alt="${randomCard}">
         
       </div>
     `;
@@ -87,7 +87,7 @@ export const renderstLevel = (game, cardsCount) => {
         const cardIndex = clickedCard.getAttribute('data-index');
         const selectedCard = cards[cardIndex];
         clickedCard.innerHTML = `
-          <img src="./img/cards/${selectedCard}.png" alt="${selectedCard}">
+          <img src="./images/${selectedCard}.png" alt="${selectedCard}">
       
         `;
         if (previousCard === null) {
