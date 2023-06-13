@@ -8,7 +8,27 @@ export const renderstLevel = (game, cardsCount) => {
   "валет пики", "валет черви", "валет крести", "валет бубны","10 пики","10 бубны", "9 пики","7 пики",
   "6 пики","10 черви","9 черви","8 черви","7 черви","10 черви","6 черви","9 бубны","8 бубны","7 бубны","6 бубны","10 крести","9 крести",
   "8 крести","7 крести","6 крести"];
+  let startTime, interval;
 
+  const startTimer = () => {
+    startTime = Date.now();
+    interval = setInterval(() => {
+      const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+      const min = Math.floor(elapsedTime / 60).toString().padStart(2, '0');
+      const sec = (elapsedTime % 60).toString().padStart(2, '0');
+      document.querySelector('.game__time').innerHTML = `${min}:${sec}`;
+    }, 1000);
+  };
+
+  const stopTimer = () => {
+    clearInterval(interval);
+  };
+
+  const resetTimer = () => {
+    stopTimer();
+    document.querySelector('.game__time').innerHTML = '00:00';
+    startTimer();
+  };
   for (let i = 0; i < cardsCount; i++) {
     const randomCard = cards[Math.floor(Math.random() * cards.length)];
     openCardsHtml += `
@@ -51,6 +71,11 @@ export const renderstLevel = (game, cardsCount) => {
       </div>
     </div>`;
   game.innerHTML = openCards;
+  startTimer();
+  document.querySelector('.buttonOver').addEventListener('click', () => {
+    resetTimer();
+    game.innerHTML = openCards;
+  });
   setTimeout(() => {
     game.innerHTML = closedCards;
     const cardElements = document.querySelectorAll('.game-go__cards-item');
@@ -63,7 +88,7 @@ export const renderstLevel = (game, cardsCount) => {
         const selectedCard = cards[cardIndex];
         clickedCard.innerHTML = `
           <img src="./img/cards/${selectedCard}.png" alt="${selectedCard}">
-        
+      
         `;
         if (previousCard === null) {
           previousCard = clickedCard; // если это первая открытая карта, сохраняем ее в переменную
@@ -76,47 +101,23 @@ export const renderstLevel = (game, cardsCount) => {
             previousCard = null;
             matchedCardsCount++;
             if (matchedCardsCount === cardsCount/2) { // если все карты совпали, то выводим сообщение о победе
-              game.innerHTML = `
-                <div class="game-go">
-                  ${gameHeader}
-                  <div class="game-go__cards">
-                    <h2>Вы победили!</h2>
-                  </div>
-                </div>
-              `;
+              stopTimer();
+              alert('Поздравляем! Вы выиграли!');
             }
+              
+            
           } else { // если буква или число не совпала, то закрываем обе открытые карты через некоторое время
             setTimeout(() => {
               previousCard.innerHTML = `
               `;
               clickedCard.innerHTML = ``;
               previousCard = null;
-            }, 1000);
+            }, 1000)
           }
         }
       });
     });
-  }, 3000);
+  }, 3000); 
 
-};
+}
 // Запускаем таймер как только карты перевернулись
-/*let time = 0
-let gameTimer = setInterval(() => {
-    time++
-
-    const minutes = Math.floor(time / 60)
-        .toString()
-        .padStart(2, '0')
-    const seconds = (time % 60).toString().padStart(2, '0')
-
-    const gameTimerElement = document.querySelector('.game__time')
-    gameTimerElement.textContent = `${minutes}.${seconds}`
-
-    //пока просто обнуляем таймер по кнопке-Начать заново
-    const buttonOver = document.querySelector('.buttonOver')
-    buttonOver.addEventListener('click', () => {
-        time = 0
-        gameTimerElement.textContent = '00.00'
-        clearInterval(gameTimer)
-    })
-}, 1000)*/

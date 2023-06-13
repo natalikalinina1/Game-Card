@@ -1,5 +1,7 @@
 import { renderTextLevel } from './textWindowLevel.js'
 import { renderstLevel } from './stLevel.js'
+
+
 const game = document.getElementById('game')
 const renderGame = () => {
     renderTextLevel(game)

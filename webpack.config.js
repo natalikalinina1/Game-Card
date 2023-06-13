@@ -1,10 +1,9 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 
-
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === 'production'
 module.exports = {
     entry: './game-card.js',
     mode: isProduction ? 'production' : 'development',
@@ -25,7 +24,7 @@ module.exports = {
                 type: 'asset/resource',
             },
             {
-                test: /\. (woff|woff2|eotIttflotf)$/i,
+                test: /\.(woff|woff2|eotIttflotf)$/i,
                 type: 'asset/resource',
             },
         ],
@@ -34,13 +33,12 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: './index.html',
         }),
-        new MiniCssExtractPlugin()
-        
-
-       
+        new MiniCssExtractPlugin({
+            filename: 'style.css',
+        }),
     ],
     optimization: {
         minimizer: ['...', new CssMinimizerPlugin()],
     },
     devtool: isProduction ? 'hidden-source-map' : 'source-map',
-};
+}
