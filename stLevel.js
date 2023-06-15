@@ -1,22 +1,50 @@
 
-export const renderstLevel = (game, level) => {
-    const stLevelHtml = `<div class="level__container">
-        <h2 class="level__text"> Сложность: ${level} !</h2>
-    </div>`;
+export const renderstLevel = (game, cardsCount) => {
+  let openCardsHtml = "";
+  let closedCardsHtml = "";
+  const cards = ["туз пики", "туз черви", "туз крести", "туз бубны",
+  "король пики", "король черви", "король крести", "король бубны",
+  "дама пики", "дама черви", "дама крести", "дама бубны",
+  "валет пики", "валет черви", "валет крести", "валет бубны","10 пики","10 бубны", "9 пики","7 пики",
+  "6 пики","10 черви","9 черви","8 черви","7 черви","10 черви","6 черви","9 бубны","8 бубны","7 бубны","6 бубны","10 крести","9 крести",
+  "8 крести","7 крести","6 крести"];
+  let startTime, interval;
 
-    game.innerHTML = stLevelHtml;
+  const startTimer = () => {
+    startTime = Date.now();
+    interval = setInterval(() => {
+      const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+      const min = Math.floor(elapsedTime / 60).toString().padStart(2, '0');
+      const sec = (elapsedTime % 60).toString().padStart(2, '0');
+      document.querySelector('.game__time').innerHTML = `${min}:${sec}`;
+    }, 1000);
+  };
 
-   
-    // Поле с открытыми картами появляется на 3 секунды , затем карты закрываются
-    setTimeout(() => {
-        game.innerHTML = ` ${openCards}`;
-        setTimeout(() => {
-          game.innerHTML = ` ${closedCards}`;
-        }, 3000);
-      }, 1200);
-    }
-    
-    const gameHeader = `
+  const stopTimer = () => {
+    clearInterval(interval);
+  };
+
+  const resetTimer = () => {
+    stopTimer();
+    document.querySelector('.game__time').innerHTML = '00:00';
+    startTimer();
+  };
+  for (let i = 0; i < cardsCount; i++) {
+    const randomCard = cards[Math.floor(Math.random() * cards.length)];
+    openCardsHtml += `
+      <div class="game-go__cards-item" data-index="${i}">
+        <img src="./images/${randomCard}.png" alt="${randomCard}">
+        
+      </div>
+    `;
+    closedCardsHtml += `
+      <div class="game-go__cards-item" data-index="${i}">
+        
+      </div>
+    `;
+    cards.splice(cards.indexOf(randomCard), 1);
+  }
+  const gameHeader = `
       <div class="game__header">
         <div class="game__time-box">
           <div class="game__text-box">
@@ -28,108 +56,68 @@ export const renderstLevel = (game, level) => {
         <button class="buttonOver"> Начать заново </button>
       </div>
     `;
-
     const closedCards = `
-      <div class="game-go">
-        ${gameHeader}
-        <div class="game-go__cards">
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        <div class="game-go__cards-item"></div>
-        </div>
-    `;
-
-    const openCards = `<div class="game-go">
-<div class="game-go__cards">
-<div class="game-go__cards-item"><img src="./img/cards/туз пики.png" alt="туз пики"></div>
-<div class="game-go__cards-item"><img src="./img/cards/король пики.png" alt="король пики"></div>
-<div class="game-go__cards-item"><img src="./img/cards/дама пики.png" alt="дама пики"></div>
-<div class="game-go__cards-item"><img src="./img/cards/валет пики.png" alt="валет пики"></div>
-<div class="game-go__cards-item"><img src="./img/cards/10 пики.png" alt="10 пики"></div>
-<div class="game-go__cards-item"><img src="./img/cards/9 пики.png" alt="9 пики"></div>
-<div class="game-go__cards-item"><img src="./img/cards/8 пики.png" alt="8 пики"></div>
-<div class="game-go__cards-item"><img src="./img/cards/7 пики.png" alt="7 пики"></div>
-<div class="game-go__cards-item"><img src="./img/cards/6 пики.png" alt="6 пики"></div>
-<div class="game-go__cards-item"><img src="./img/cards/туз черви.png" alt="туз черви"></div>
-<div class="game-go__cards-item"><img src="./img/cards/король черви.png" alt="король черви"></div>
-<div class="game-go__cards-item"><img src="./img/cards/дама черви.png" alt="дама черви"></div>
-<div class="game-go__cards-item"><img src="./img/cards/валет черви.png" alt="валет черви"></div>
-<div class="game-go__cards-item"><img src="./img/cards/10 черви.png" alt="10 черви"></div>
-<div class="game-go__cards-item"><img src="./img/cards/9 черви.png" alt="9 черви"></div>
-<div class="game-go__cards-item"><img src="./img/cards/8 черви.png" alt="8 черви"></div>
-<div class="game-go__cards-item"><img src="./img/cards/7 черви.png" alt="7 черви"></div>
-<div class="game-go__cards-item"><img src="./img/cards/6 черви.png" alt="6 черви"></div>
-<div class="game-go__cards-item"><img src="./img/cards/туз бубны.png" alt="туз бубны"></div>
-<div class="game-go__cards-item"><img src="./img/cards/король бубны.png" alt="король бубны"></div>
-<div class="game-go__cards-item"><img src="./img/cards/дама бубны.png" alt="дама бубны"></div>
-<div class="game-go__cards-item"><img src="./img/cards/валет бубны.png" alt="валет бубны"></div>
-<div class="game-go__cards-item"><img src="./img/cards/10 бубны.png" alt="10 бубны"></div>
-<div class="game-go__cards-item"><img src="./img/cards/9 бубны.png" alt="9 бубны"></div>
-<div class="game-go__cards-item"><img src="./img/cards/8 бубны.png" alt="8 бубны"></div>
-<div class="game-go__cards-item"><img src="./img/cards/7 бубны.png" alt="7 бубны"></div>
-<div class="game-go__cards-item"><img src="./img/cards/6 бубны.png" alt="6 бубны"></div>
-<div class="game-go__cards-item"><img src="./img/cards/туз крести.png" alt="туз крести"></div>
-<div class="game-go__cards-item"><img src="./img/cards/король крести.png" alt="король крести"></div>
-<div class="game-go__cards-item"><img src="./img/cards/дама крести.png" alt="дама крести"></div>
-<div class="game-go__cards-item"><img src="./img/cards/валет крести.png" alt="валет крести"></div>
-<div class="game-go__cards-item"><img src="./img/cards/10 крести.png" alt="10 крести"></div>
-<div class="game-go__cards-item"><img src="./img/cards/9 крести.png" alt="9 крести"></div>
-<div class="game-go__cards-item"><img src="./img/cards/8 крести.png" alt="8 крести"></div>
-<div class="game-go__cards-item"><img src="./img/cards/7 крести.png" alt="7 крести"></div>
-<div class="game-go__cards-item"><img src="./img/cards/6 крести.png" alt="6 крести"></div>
-</div>
-</div>`;
-
-       // Запускаем таймер как только карты перевернулись
-        let time = 0;
-        let gameTimer = setInterval(() => {
-            time++;
-
-            const minutes = Math.floor(time / 60).toString().padStart(2, '0');
-            const seconds = (time % 60).toString().padStart(2, '0');
-
-            const gameTimerElement = document.querySelector('.game__time');
-            gameTimerElement.textContent = `${minutes}.${seconds}`;
-       
-        //пока просто обнуляем таймер по кнопке-Начать заново
-        const buttonOver = document.querySelector('.buttonOver');
-        buttonOver.addEventListener('click', () => {
-            time = 0;
-            gameTimerElement.textContent = '00.00';
-            clearInterval(gameTimer);
-        })
-    }, 1000);
+    <div class="game-go">
+      ${gameHeader}
+      <div class="game-go__cards">
+        ${closedCardsHtml}
+      </div>
+    </div>`;
+  const openCards = `
+    <div class="game-go">
+      ${gameHeader}
+      <div class="game-go__cards">
+        ${openCardsHtml}
+      </div>
+    </div>`;
+  game.innerHTML = openCards;
+  startTimer();
+  document.querySelector('.buttonOver').addEventListener('click', () => {
+    resetTimer();
+    game.innerHTML = openCards;
+  });
+  setTimeout(() => {
+    game.innerHTML = closedCards;
+    const cardElements = document.querySelectorAll('.game-go__cards-item');
+    let previousCard = null; // переменная для хранения предыдущей открытой карты
+    let matchedCardsCount = 0; // переменная для подсчета количества уже совпавших карт
+    cardElements.forEach((card) => {
+      card.addEventListener('click', (event) => {
+        const clickedCard = event.currentTarget;
+        const cardIndex = clickedCard.getAttribute('data-index');
+        const selectedCard = cards[cardIndex];
+        clickedCard.innerHTML = `
+          <img src="./images/${selectedCard}.png" alt="${selectedCard}">
       
+        `;
+        if (previousCard === null) {
+          previousCard = clickedCard; // если это первая открытая карта, сохраняем ее в переменную
+        } else {
+          const previousCardIndex = previousCard.getAttribute('data-index');
+          const previousCardValue = cards[previousCardIndex];
+          if (selectedCard.charAt(0) === previousCardValue.charAt(0)) { // если первая буква или число совпала с предыдущей, то удаляем обработчик клика и увеличиваем счетчик совпавших карт
+            previousCard.removeEventListener('click', () => {});
+            clickedCard.removeEventListener('click', () => {});
+            previousCard = null;
+            matchedCardsCount++;
+            if (matchedCardsCount === cardsCount/2) { // если все карты совпали, то выводим сообщение о победе
+              stopTimer();
+              alert('Поздравляем! Вы выиграли!');
+            }
+              
+            
+          } else { // если буква или число не совпала, то закрываем обе открытые карты через некоторое время
+            setTimeout(() => {
+              previousCard.innerHTML = `
+              `;
+              clickedCard.innerHTML = ``;
+              previousCard = null;
+            }, 1000)
+          }
+        }
+      });
+    });
+  }, 3000); 
+
+}
+
