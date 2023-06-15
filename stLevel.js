@@ -102,22 +102,49 @@ export const renderstLevel = (game, cardsCount) => {
             matchedCardsCount++;
             if (matchedCardsCount === cardsCount/2) { // если все карты совпали, то выводим сообщение о победе
               stopTimer();
-              alert('Поздравляем! Вы выиграли!');
+              const time = document.querySelector('.game__time').innerHTML;
+              const resultTable = `
+              <div class"result">
+              <div class="result-table">
+                <img src="./images/win.png" alt='win'>
+                <h2 class="result__status">Поздравляем! Вы выиграли!</h2>
+                <p class ="result__time-text">Затраченное время </p>
+                <p class = "result__time">${time}</p>
+                <button class="result__button_again"> Начать заново </button>
+              </div>
+              </div>
+            `;
+                  
+              game.innerHTML = resultTable;
             }
-              
-            
-          } else { // если буква или число не совпала, то закрываем обе открытые карты через некоторое время
+          } else if (matchedCardsCount === cardsCount / 3 && selectedCard !== previousCardValue) { // если количество уже совпавших карт равно 1/3 от общего числа и они не совпали, то выводим сообщение о проигрыше и затраченном времени
+            stopTimer();
+            const time = document.querySelector('.game__time').innerHTML;
+            const resultTable = `
+            <div class"result">
+              <div class="result-table">
+              <img src="./images/loss.png" alt='loss'>
+                <h2 class="result__status">Вы проиграли!</h2>
+                <p class ="result__time-text">Затраченное время </p>
+                <p class = "result__time">${time}</p>
+                <button class= "result__button_again"> Начать заново </button>
+              </div>
+              </div>
+            `;
+            game.innerHTML = resultTable;
+
+        }
+           else { // иначе закрываем обе карты через 1 секунду и сбрасываем предыдущую открытую карту
             setTimeout(() => {
-              previousCard.innerHTML = `
-              `;
-              clickedCard.innerHTML = ``;
+              clickedCard.innerHTML = '';
+              previousCard.innerHTML = '';
               previousCard = null;
-            }, 1000)
+            }, 1000);
           }
         }
       });
     });
-  }, 3000); 
+  }, 5000);
+};
 
-}
-
+export default renderstLevel;
