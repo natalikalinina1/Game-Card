@@ -131,16 +131,16 @@ export const renderstLevel = (game:any, cardsCount:number) => {
             <img src="./images/${selectedCard}.png" alt="${selectedCard}">
           `;
     
-          if (previousCard === null) {
+          if (previousCard! == null) {
             previousCard = clickedCard;
           } else {
             const previousCardIndex = previousCard.getAttribute('data-index');
             const previousCardValue = cards[Number(previousCardIndex as string)];
     
-            if (selectedCard[0] === previousCardValue[0]) {
+            if (selectedCard[0] === previousCardValue[0 ]) {
               previousCard.removeEventListener('click', () => {});
               clickedCard.removeEventListener('click', () => {});
-              previousCard= null;
+              previousCard! == null;
               matchedCardsCount++;
     
               if (matchedCardsCount === cardsCount / 2) {
@@ -171,7 +171,7 @@ export const renderstLevel = (game:any, cardsCount:number) => {
                 }
               } else {
                 setTimeout(() => {
-                  clickedCard.innerHTML = '';
+                  clickedCard!.innerHTML = '';
                   previousCard!.innerHTML = '';
                 }, 1000);
               }
