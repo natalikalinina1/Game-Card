@@ -40,11 +40,11 @@ export const renderstLevel = (game:any, cardsCount:number) => {
         '6 крести',
     ]
 
-    let startTime:any, interval:any
+    let startTime:number, interval:NodeJS.Timeout
 
     const startTimer = (): void => {
-      let startTime: any = Date.now();
-      let interval: any = setInterval(() => {
+       startTime = Date.now();
+       interval = setInterval(() => {
         const elapsedTime: number = Math.floor((Date.now() - startTime) / 1000);
         const min: string = Math.floor(elapsedTime / 60)
           .toString()
