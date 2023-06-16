@@ -1,4 +1,4 @@
-export const renderstLevel = (game, cardsCount) => {
+export const renderstLevel = (game:any, cardsCount:number) => {
     let openCardsHtml = ''
     let closedCardsHtml = ''
     const cards = [
@@ -40,7 +40,7 @@ export const renderstLevel = (game, cardsCount) => {
         '6 крести',
     ]
 
-    let startTime, interval
+    let startTime:any, interval:any
 
     const startTimer = () => {
         startTime = Date.now()
@@ -115,11 +115,11 @@ export const renderstLevel = (game, cardsCount) => {
             renderstLevel(game, cardsCount) // вызываем функцию renderstLevel заново, чтобы начать игру сначала
         })
         const cardElements = document.querySelectorAll('.game-go__cards-item')
-        let previousCard = null // переменная для хранения предыдущей открытой карты
+        let previousCard: HTMLElement | null = null;// переменная для хранения предыдущей открытой карты
         let matchedCardsCount = 0 // переменная для подсчета количества уже совпавших карт
         cardElements.forEach((card) => {
             card.addEventListener('click', (event) => {
-                const clickedCard = event.currentTarget
+                const clickedCard = event.currentTarget as HTMLElement
                 const cardIndex = clickedCard.getAttribute('data-index')
                 const selectedCard = cards[cardIndex]
                 clickedCard.innerHTML = `

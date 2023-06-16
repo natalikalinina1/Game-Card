@@ -5,7 +5,7 @@ import * as _ from "lodash";
 
 const game: HTMLElement | null = document.getElementById('game');
 const renderGame: () => void = () => {
-    renderTextLevel(game);
+    renderTextLevel(game!);
 }
 
 const handleSubmit: (event: Event) => void = (event) => {

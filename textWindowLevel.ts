@@ -1,4 +1,4 @@
-export const renderTextLevel = (game) => {
+export const renderTextLevel = (game:HTMLElement):void  => {
 
     const textLevelHtml = `<div class="level__container">
         <h2 class="level__text">Выбери сложность</h2>
