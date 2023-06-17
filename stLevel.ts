@@ -1,4 +1,4 @@
-export const renderstLevel = (game:any, cardsCount:number) => {
+export const renderstLevel = (game:HTMLElement | null, cardsCount:number) => {
     let openCardsHtml = ''
     let closedCardsHtml = ''
     const cards = [
@@ -106,11 +106,11 @@ export const renderstLevel = (game:any, cardsCount:number) => {
         ${openCardsHtml}
       </div>
     </div>`
-    game.innerHTML = openCards
+    game!.innerHTML = openCards
     startTimer()
 
     setTimeout(() => {
-      game.innerHTML = closedCards;
+      game!.innerHTML = closedCards;
       document.querySelector('.buttonOver')?.addEventListener('click', () => {
         resetTimer();
         renderstLevel(game, cardsCount);
@@ -157,7 +157,7 @@ export const renderstLevel = (game:any, cardsCount:number) => {
                     </div>
                   </div>
                 `;
-                game.innerHTML = resultTable
+                game!.innerHTML = resultTable
     
                 const againButton = document.querySelector<HTMLButtonElement>(
                   '.result__button_again'
