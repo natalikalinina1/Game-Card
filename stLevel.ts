@@ -126,14 +126,15 @@ export const renderstLevel = (game:HTMLElement | null, cardsCount:number) => {
                 stopTimer();
                 const time = document.querySelector('.game__time')?.innerHTML;
                 const resultTable = `
-                <div class"result">
+                <div class="result">
                 <div class="result-table">
                   <img src="./images/win.png" alt='win'>
                   <h2 class="result__status">Поздравляем! Вы выиграли!</h2>
                   <p class ="result__time-text">Затраченное время </p>
                   <p class = "result__time">${time}</p>
                   <button class="result__button_again"> Начать заново </button>
-                </div>   </div>    `;
+                </div>   
+                </div>    `;
                 game!.innerHTML = resultTable;
                 const againButton = document.querySelector(
                   '.result__button_again'
@@ -146,14 +147,15 @@ export const renderstLevel = (game:HTMLElement | null, cardsCount:number) => {
                 stopTimer();
                 const time = document.querySelector('.game__time')?.innerHTML;
                 const resultTable = `
-                <div class"result">
+                <div class="result">
                   <div class="result-table">
                   <img src="./images/loss.png" alt='loss'>
                   <h2 class="result__status">Вы проиграли!</h2>
                   <p class ="result__time-text">Затраченное время </p>
                     <p class = "result__time">${time}</p>
                     <button class= "result__button_again"> Начать заново </button>
-                  </div>  </div> `;
+                  </div> 
+                 </div> `;
                 game!.innerHTML = resultTable;
                 const againButton = document.querySelector(
                   '.result__button_again'
@@ -165,7 +167,7 @@ export const renderstLevel = (game:HTMLElement | null, cardsCount:number) => {
                 setTimeout(() => {
                 clickedCard!.innerHTML = '';
               previousCard!.innerHTML = '';
-              previousCard = null;
+              
             }, 1000);
           } 
         }  }
