@@ -41,7 +41,6 @@ export const renderstLevel = (game:HTMLElement | null, cardsCount:number) => {
     ]
 
     let startTime:number, interval:NodeJS.Timeout
-
     const startTimer = (): void => {
        startTime = Date.now();
        interval = setInterval(() => {
@@ -64,127 +63,115 @@ export const renderstLevel = (game:HTMLElement | null, cardsCount:number) => {
       document.querySelector(".game__time")!.innerHTML = "00:00";
       startTimer();
     };
-
     for (let i = 0; i < cardsCount; i++) {
-        const randomCard = cards[Math.floor(Math.random() * cards.length)]
-        openCardsHtml += `
-      <div class="game-go__cards-item" data-index="${i}">
-        <img src="./images/${randomCard}.png" alt="${randomCard}">
-        
-      </div>
-    `
-        closedCardsHtml += `
-      <div class="game-go__cards-item" data-index="${i}">
-        
-      </div>
-    `
-        cards.splice(cards.indexOf(randomCard), 1)
-    }
+      const randomCard = cards[Math.floor(Math.random() * cards.length)];
+      openCardsHtml += `
+        <div class="game-go__cards-item" data-index="${i}">
+          <img src="./images/${randomCard}.png" alt="${randomCard}">
+        </div>  `;
+      closedCardsHtml += `
+        <div class="game-go__cards-item" data-index="${i}">
+        </div>   `;
+      cards.splice(cards.indexOf(randomCard), 1);   }
     const gameHeader = `
-      <div class="game__header">
-        <div class="game__time-box">
-          <div class="game__text-box">
-            <p class="game__text">min</p>
-            <p class="game__text">sek</p>
+        <div class="game__header">
+          <div class="game__time-box">
+            <div class="game__text-box">
+              <p class="game__text">min</p>
+              <p class="game__text">sek</p>
+            </div>
+            <div class="game__time"> </div>
           </div>
-          <div class="game__time"> </div>
-        </div>
-        <button class="buttonOver"> Начать заново </button>
-      </div>
-    `
-    const closedCards = `
-    <div class="game-go">
-      ${gameHeader}
-      <div class="game-go__cards">
-        ${closedCardsHtml}
-      </div>
-    </div>`
+          <button class="buttonOver"> Начать заново </button>
+        </div>  `;
+      const closedCards = `
+      <div class="game-go">
+        ${gameHeader}
+        <div class="game-go__cards">
+          ${closedCardsHtml}
+        </div> </div>`;
     const openCards = `
-    <div class="game-go">
-      ${gameHeader}
-      <div class="game-go__cards">
-        ${openCardsHtml}
-      </div>
-    </div>`
-    game!.innerHTML = openCards
-    startTimer()
-
+      <div class="game-go">
+        ${gameHeader}
+        <div class="game-go__cards">
+          ${openCardsHtml}
+        </div> </div>`;
+    game!.innerHTML = openCards;
+    startTimer();
+    document.querySelector('.buttonOver')?.addEventListener('click', () => { resetTimer();
+      game!.innerHTML = openCards;});
     setTimeout(() => {
       game!.innerHTML = closedCards;
-      document.querySelector('.buttonOver')?.addEventListener('click', () => {
-        resetTimer();
-        renderstLevel(game, cardsCount);
-      });
-
-
       const cardElements = document.querySelectorAll('.game-go__cards-item');
-      let previousCard: HTMLElement | null = null;
-      let matchedCardsCount = 0;
-    
+      let previousCard:HTMLElement | null = null;
+      let matchedCardsCount = 0; 
       cardElements.forEach((card: Element) => {
-        card.addEventListener('click', (event: Event) => {
+        card.addEventListener('click', (event:Event) => {
           const clickedCard = event.currentTarget as HTMLElement;
           const cardIndex = clickedCard.getAttribute('data-index');
           const selectedCard = cards[Number(cardIndex as string)];
-    
           clickedCard.innerHTML = `
-            <img src="./images/${selectedCard}.png" alt="${selectedCard}">
-          `;
-    
-          if (previousCard! == null) {
-            previousCard = clickedCard;
+            <img src="./images/${selectedCard}.png" alt="${selectedCard}"> `;
+         if (previousCard! == null) {
+            previousCard = clickedCard; 
           } else {
-            const previousCardIndex = previousCard.getAttribute('data-index');
+        const previousCardIndex = previousCard.getAttribute('data-index');
             const previousCardValue = cards[Number(previousCardIndex as string)];
-    
-            if (selectedCard[0] === previousCardValue[0 ]) {
+            if (selectedCard.charAt(0) === previousCardValue.charAt(0)) {
               previousCard.removeEventListener('click', () => {});
               clickedCard.removeEventListener('click', () => {});
-              previousCard! == null;
-              matchedCardsCount++;
-    
-              if (matchedCardsCount === cardsCount / 2) {
+              previousCard = null;
+               matchedCardsCount++;
+              if (matchedCardsCount === cardsCount/2) { // если все карты совпали, то выводим сообщение о победе
                 stopTimer();
                 const time = document.querySelector('.game__time')?.innerHTML;
                 const resultTable = `
-                  <div class="result">
-                    <div class="result-table">
-                      <img src="./images/win.png" alt='win'>
-                      <h2 class="result__status"> Вы выиграли!</h2>
-                      <p class ="result__time-text">Затраченное время </p>
-                      <p class = "result__time">${time}</p>
-                      <button class="result__button_again"> Начать заново </button>
-                    </div>
-                  </div>
-                `;
-                game!.innerHTML = resultTable
-    
-                const againButton = document.querySelector<HTMLButtonElement>(
+                <div class"result">
+                <div class="result-table">
+                  <img src="./images/win.png" alt='win'>
+                  <h2 class="result__status">Поздравляем! Вы выиграли!</h2>
+                  <p class ="result__time-text">Затраченное время </p>
+                  <p class = "result__time">${time}</p>
+                  <button class="result__button_again"> Начать заново </button>
+                </div>   </div>    `;
+                game!.innerHTML = resultTable;
+                const againButton = document.querySelector(
                   '.result__button_again'
-                );
-                if (againButton) {
-                  againButton.addEventListener('click', () => {
-                    renderstLevel(game, cardsCount);
-                  });
-                } else {
-                  console.log('againButton is not found');
-                }
-              } else {
+              ) // перемещаем определение кнопки внутрь условия, чтобы она была доступна только после победы
+              againButton?.addEventListener('click', () => {
+                  renderstLevel(game, cardsCount) // вызываем функцию renderstLevel заново, чтобы начать игру сначала
+              })
+              } 
+            } else if (matchedCardsCount === cardsCount / 3 && selectedCard !== previousCardValue) { 
+                stopTimer();
+                const time = document.querySelector('.game__time')?.innerHTML;
+                const resultTable = `
+                <div class"result">
+                  <div class="result-table">
+                  <img src="./images/loss.png" alt='loss'>
+                  <h2 class="result__status">Вы проиграли!</h2>
+                  <p class ="result__time-text">Затраченное время </p>
+                    <p class = "result__time">${time}</p>
+                    <button class= "result__button_again"> Начать заново </button>
+                  </div>  </div> `;
+                game!.innerHTML = resultTable;
+                const againButton = document.querySelector(
+                  '.result__button_again'
+              ) // перемещаем определение кнопки внутрь условия, чтобы она была доступна только после победы
+              againButton?.addEventListener('click', () => {
+                  renderstLevel(game, cardsCount) // вызываем функцию renderstLevel заново, чтобы начать игру сначала
+              })
+            } else { 
                 setTimeout(() => {
-                  clickedCard!.innerHTML = '';
-                  previousCard!.innerHTML = '';
-                }, 1000);
-              }
-            }
-          }
-        });
-      });
-    }, 2000);
-  }
-
-
-                           
-            
-
-                       
+                clickedCard!.innerHTML = '';
+              previousCard!.innerHTML = '';
+              previousCard = null;
+            }, 1000);
+          } 
+        }  }
+        );
+      }
+      );
+}, 5000);
+};                 
                        

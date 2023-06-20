@@ -11,7 +11,8 @@
         "build": "NODE_ENV=production webpack",
         "start": "webpack-dev-server --open",
         "lint:ts": "tsc ––noEmit",
-        "type": "module"
+        "type": "module",
+        "precommit": "npm run prettier:write" 
     },
     "repository": {
         "type": "git",
@@ -24,6 +25,8 @@
     },
     "homepage": "https://github.com/natalikalinina1/Game-Card#readme",
     "dependencies": {
+        "-": "^0.0.1",
+        "husky": "^8.0.3",
         "lodash": "^4.17.21"
     },
     "devDependencies": {
