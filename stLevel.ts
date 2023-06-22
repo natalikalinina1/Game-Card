@@ -1,179 +1,162 @@
-export const renderstLevel = (game:HTMLElement | null, cardsCount:number) => {
-    let openCardsHtml = ''
-    let closedCardsHtml = ''
-    const cards = [
-        'туз пики',
-        'туз черви',
-        'туз крести',
-        'туз бубны',
-        'король пики',
-        'король черви',
-        'король крести',
-        'король бубны',
-        'дама пики',
-        'дама черви',
-        'дама крести',
-        'дама бубны',
-        'валет пики',
-        'валет черви',
-        'валет крести',
-        'валет бубны',
-        '10 пики',
-        '10 бубны',
-        '9 пики',
-        '7 пики',
-        '6 пики',
-        '10 черви',
-        '9 черви',
-        '8 черви',
-        '7 черви',
-        '10 черви',
-        '6 черви',
-        '9 бубны',
-        '8 бубны',
-        '7 бубны',
-        '6 бубны',
-        '10 крести',
-        '9 крести',
-        '8 крести',
-        '7 крести',
-        '6 крести',
-    ]
+import { windowGameEnd } from './game-end';
 
-    let startTime:number, interval:NodeJS.Timeout
-    const startTimer = (): void => {
-       startTime = Date.now();
-       interval = setInterval(() => {
-        const elapsedTime: number = Math.floor((Date.now() - startTime) / 1000);
-        const min: string = Math.floor(elapsedTime / 60)
-          .toString()
-          .padStart(2, "0");
-        const sec: string = (elapsedTime % 60).toString().padStart(2, "0");
-        const time: string = `${min}:${sec}`;
-        document.querySelector(".game__time")!.innerHTML = time;
-      }, 1000);
-    };
-    
-    const stopTimer = (): void => {
-      clearInterval(interval);
-    };
-    
-    const resetTimer = (): void => {
-      stopTimer();
-      document.querySelector(".game__time")!.innerHTML = "00:00";
-      startTimer();
-    };
-    for (let i = 0; i < cardsCount; i++) {
-      const randomCard = cards[Math.floor(Math.random() * cards.length)];
-      openCardsHtml += `
-        <div class="game-go__cards-item" data-index="${i}">
-          <img src="./images/${randomCard}.png" alt="${randomCard}">
-        </div>  `;
-      closedCardsHtml += `
-        <div class="game-go__cards-item" data-index="${i}">
-        </div>   `;
-      cards.splice(cards.indexOf(randomCard), 1);   }
-    const gameHeader = `
-        <div class="game__header">
-          <div class="game__time-box">
-            <div class="game__text-box">
-              <p class="game__text">min</p>
-              <p class="game__text">sek</p>
-            </div>
-            <div class="game__time"> </div>
-          </div>
-          <button class="buttonOver"> Начать заново </button>
-        </div>  `;
-      const closedCards = `
-      <div class="game-go">
-        ${gameHeader}
-        <div class="game-go__cards">
-          ${closedCardsHtml}
-        </div> </div>`;
-    const openCards = `
-      <div class="game-go">
-        ${gameHeader}
-        <div class="game-go__cards">
-          ${openCardsHtml}
-        </div> </div>`;
-    game!.innerHTML = openCards;
-    startTimer();
-    document.querySelector('.buttonOver')?.addEventListener('click', () => { resetTimer();
-      game!.innerHTML = openCards;});
-    setTimeout(() => {
-      game!.innerHTML = closedCards;
-      const cardElements = document.querySelectorAll('.game-go__cards-item');
-      let previousCard:HTMLElement | null = null;
-      let matchedCardsCount = 0; 
-      cardElements.forEach((card: Element) => {
-        card.addEventListener('click', (event:Event) => {
-          const clickedCard = event.currentTarget as HTMLElement;
-          const cardIndex = clickedCard.getAttribute('data-index');
-          const selectedCard = cards[Number(cardIndex as string)];
-          clickedCard.innerHTML = `
-            <img src="./images/${selectedCard}.png" alt="${selectedCard}"> `;
-         if (previousCard! == null) {
-            previousCard = clickedCard; 
-          } else {
-        const previousCardIndex = previousCard.getAttribute('data-index');
-            const previousCardValue = cards[Number(previousCardIndex as string)];
-            if (selectedCard.charAt(0) === previousCardValue.charAt(0)) {
-              previousCard.removeEventListener('click', () => {});
-              clickedCard.removeEventListener('click', () => {});
-              previousCard = null;
-               matchedCardsCount++;
-              if (matchedCardsCount === cardsCount/2) { // если все карты совпали, то выводим сообщение о победе
-                stopTimer();
-                const time = document.querySelector('.game__time')?.innerHTML;
-                const resultTable = `
-                <div class="result">
-                <div class="result-table">
-                  <img src="./images/win.png" alt='win'>
-                  <h2 class="result__status">Поздравляем! Вы выиграли!</h2>
-                  <p class ="result__time-text">Затраченное время </p>
-                  <p class = "result__time">${time}</p>
-                  <button class="result__button_again"> Начать заново </button>
-                </div>   
-                </div>    `;
-                game!.innerHTML = resultTable;
-                const againButton = document.querySelector(
-                  '.result__button_again'
-              ) // перемещаем определение кнопки внутрь условия, чтобы она была доступна только после победы
-              againButton?.addEventListener('click', () => {
-                  renderstLevel(game, cardsCount) // вызываем функцию renderstLevel заново, чтобы начать игру сначала
-              })
-              } 
-            } else if (matchedCardsCount === cardsCount / 3 && selectedCard !== previousCardValue) { 
-                stopTimer();
-                const time = document.querySelector('.game__time')?.innerHTML;
-                const resultTable = `
-                <div class="result">
-                  <div class="result-table">
-                  <img src="./images/loss.png" alt='loss'>
-                  <h2 class="result__status">Вы проиграли!</h2>
-                  <p class ="result__time-text">Затраченное время </p>
-                    <p class = "result__time">${time}</p>
-                    <button class= "result__button_again"> Начать заново </button>
-                  </div> 
-                 </div> `;
-                game!.innerHTML = resultTable;
-                const againButton = document.querySelector(
-                  '.result__button_again'
-              ) // перемещаем определение кнопки внутрь условия, чтобы она была доступна только после победы
-              againButton?.addEventListener('click', () => {
-                  renderstLevel(game, cardsCount) // вызываем функцию renderstLevel заново, чтобы начать игру сначала
-              })
-            } else { 
-                setTimeout(() => {
-                clickedCard!.innerHTML = '';
-              previousCard!.innerHTML = '';
-              
-            }, 1000);
-          } 
-        }  }
-        );
+    export const renderstLevel = (game: HTMLElement, level: number): void => {
+      interface Card {
+        value: string | undefined;
+        condition: HTMLElement | null;
       }
-      );
-}, 5000);
-};                 
-                       
+      const arrCards: string[] = [];
+      let rank: string | undefined;
+      let suit: string | undefined;
+    
+      const getImageTag = (rank: string, suit: string): string => {
+        return `<img data-value="${rank} ${suit}" class="game__card" src="images/${rank} ${suit}.png" alt="${rank} ${suit}">`;
+      };
+    let card;
+      const getUniqueCard = (): string => {
+        do {
+          rank = ["6", "7", "8", "9", "10", "валет", "король", "дама", "туз"][Math.floor(Math.random() * 9)];
+          suit = [ "пики", "черви", "бубны","крести", ][Math.floor(Math.random() * 4)];
+          card = getImageTag(rank, suit);
+        } while (arrCards.includes(card));
+        return card;
+      };
+    
+      for (let i = 0; i < level / 2; i++) {
+        const card = getUniqueCard();
+        arrCards.push(card);
+        let index = Math.floor(Math.random() * level) + 1;
+        let AvailableSlot = false;
+    
+        while (!AvailableSlot) {
+          if (!arrCards[index]) {
+            arrCards[index] = card;
+            AvailableSlot = true;
+          } else if (index === level) {
+            index = 1;
+          } else {
+            index++;
+          }
+        }
+      }
+   // game.innerHTML = arrCards.join("");
+  const timer = (deadline: number) => {
+    let time = deadline;
+    const interval = setInterval(() => {
+      time -= 1;
+      const renderstLevelHtml =  `
+			<div class="go-game">
+				<div class="header-game">
+					<div class="header-game-timer">
+						<div class="timer__text">
+							<div class="timer__text-min">min</div>
+							<div class="timer__text-sec">sec</div>
+						</div>
+						<div class="timer__group">
+							<div class="timer__minutes">00</div>
+							<div class="timer__seconds">${time < 10 ? "0" + time : time}</div>
+						</div>
+					</div>
+					<div class="game-button">
+						<button class="button-over"> Начать заново </button>
+					</div>
+				</div>
+				<div class="game-card">
+					${arrCards.map((card) => card).join("")}
+				</div>
+			</div>
+			`;
+      game.innerHTML = renderstLevelHtml;
+      // Обработчик кнопки "Начать заново"/*
+      const btnButtonOver  = document.querySelector(".button-over");
+      btnButtonOver?.addEventListener("click", () => {
+        renderstLevel(game,level);
+      });
+    }, 1000);
+    setTimeout(() => {
+      clearInterval(interval);
+      //Закрываем карты
+      const cards = document.querySelectorAll(".game__card");
+      cards.forEach((card) => {
+        card.setAttribute("src", "images/рубашка.jpg");
+      });
+      //Запуск таймера
+      const sec = document.querySelector(".timer__seconds") as HTMLElement;
+      const min = document.querySelector(".timer__minutes") as HTMLElement;
+      let second = "00";
+      let minute = "00";
+      setInterval(() => {
+        second = (Number(sec.innerHTML) + 1).toString().padStart(2, "0");
+        if (Number(second) < 60) {
+          sec.innerHTML = second;
+        } else {
+          minute = (Number(min.innerHTML) + 1).toString().padStart(2, "0");
+          min.innerHTML = minute;
+          sec.innerHTML = "00";
+        }
+      }, 1000);
+
+      const firstCard: Card = {
+        value: "",
+        condition: null,
+      };
+      const secondCard: Card = {
+        value: "",
+        condition: null,
+      };
+      let statusUser: boolean;
+      const isWinner = () => {
+        const cards: HTMLElement[] = Array.from(
+          document.querySelectorAll(".game__card")
+        );
+        for (const card of cards) {
+          if (card.dataset.status !== "open") {
+            return false;
+          }
+        }
+        return true;
+      };
+      const  pairsOfCards = (firstCard: Card, secondCard: Card) => {
+        if (firstCard.value !== secondCard.value) {
+          statusUser = false;
+          windowGameEnd(game, statusUser, minute, second);
+        } else {
+          firstCard.condition?.setAttribute("data-status", "open");
+          secondCard.condition?.setAttribute("data-status", "open");
+          if (isWinner()) {
+            statusUser = true;
+            windowGameEnd(game, statusUser, minute, second);
+          } else {
+            firstCard.value = "";
+            firstCard.condition = null;
+            secondCard.value = "";
+            secondCard.condition = null;
+          }
+        }
+      };
+      cards.forEach((card) => {
+        card.addEventListener("click", () => {
+           const htmlCard = card as HTMLElement;
+          if (htmlCard.dataset.status !== "open") {
+            htmlCard.setAttribute(
+              "src",`images/${htmlCard.dataset.value}.png`
+            );
+            if (!firstCard.value) {
+        
+              firstCard.value = htmlCard.dataset.value!;
+              firstCard.condition = htmlCard;
+            } else {
+             
+              secondCard.value = htmlCard.dataset.value!;
+              secondCard.condition = htmlCard;
+              pairsOfCards(firstCard, secondCard);
+            }
+          }
+      
+        });
+      });
+    }, deadline * 1000);
+  };
+  timer(6);
+};
+

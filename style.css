@@ -91,69 +91,11 @@ body {
     transition: all 1s;
     background: #0080c1;
 }
-
-.game__header {
+.game-card {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    gap: 8px;
 }
-.game__time-box {
-    padding-bottom: 48px;
-    width: 155px;
-}
-.game__time {
-    font-weight: 400;
-    font-size: 64px;
-    color: #ffffff;
-    line-height: 12px;
-}
-.game__text-box {
-    display: flex;
-    gap: 67px;
-    color: #ffffff;
-    font-size: 16px;
-    font-weight: 400;
-    padding-bottom: 20px;
-    padding-left: 10px;
-}
-.game-go__cards {
-    display: grid;
-    grid-template-columns: repeat(9, 1fr);
-    gap: 15px;
-}
-.game-go__cards-item {
-    width: 95px;
-    height: 133px;
-    background-image: url(./images/рубашка.jpg);
-    border-radius: 4px;
-    border-style: none;
-}
-.game-go__cards-item:hover {
-    transform: scale(1.1);
-}
-.buttonOver {
-    background: #7ac100;
-    border-radius: 12px;
-    width: 246px;
-    height: 50px;
-    font-family: 'StratosSkyeng';
-    font-size: 24px;
-    font-weight: 400;
-    line-height: 32px;
-    margin-bottom: 48px;
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-style: none;
-    cursor: pointer;
-}
-
-.buttonOver:active {
-    background: hwb(207 42% 5%/0.582);
-}
-
-.result {
+.game-end {
     position: absolute;
     top: 0;
     left: 0;
@@ -163,16 +105,16 @@ body {
     justify-content: center;
     align-items: center;
     background-color: rgba(0, 73, 128, 0.9);
-  }
-  .result-table {
+}
+.game-end-table {
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: #c2f5ff;
     border-radius: 12px;
     padding: 30px 100px;
-  }
-  .result__status {
+}
+.game-end__header {
     text-align: center;
     margin-top: 4px;
     font-style: normal;
@@ -181,39 +123,76 @@ body {
     line-height: 48px;
     color: #004980;
     font-family: 'StratosSkyeng';
-  }
-  .result__time {
-    margin-top: 1px;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 64px;
-    line-height: 72px;
-    color: #000;
-  }
-  .result__time-text {
+}
+
+.game-end__text {
     font-family: 'StratosSkyeng';
-    margin-top: 28px;
     font-style: normal;
     font-weight: 400;
-    font-size: 24px;
+    font-size: 28px;
     line-height: 32px;
-    color: #000;
-  }
-  .result__button_again {
-  
+    color: #004980;
+    margin-bottom: -25px;
+}
+
+.button-over {
+    font-family: 'StratosSkyeng';
     width: 246px;
     height: 50px;
     background: #7ac100;
-    border: none;
     border-radius: 12px;
     font-style: normal;
     font-weight: 400;
     font-size: 24px;
-    line-height: 32px;
+    text-align: center;
     color: #ffffff;
+    border: none;
+    opacity: 1;
+}
+.button-over:hover {
     cursor: pointer;
-  }
-  .result__button_again {
-    opacity: 0.7;
-  }
-  
+    opacity: 0.9;
+    box-shadow: 0px 0px 10px #c2f5ff;
+    transition: 0.3s;
+}
+.button-over:active {
+    background: #c2f5ff;
+}
+.header-game {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 30px 0 46px;
+}
+.timer__text {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    padding-right: 4px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 32px;
+    color: #fff;
+}
+.timer__group {
+    display: flex;
+    flex-direction: row;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 64px;
+    line-height: 72px;
+    color: #fff;
+}
+.timer__minutes::after {
+    content: '.';
+}
+.time-end {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 64px;
+    line-height: 72px;
+    color: #004980;
+}

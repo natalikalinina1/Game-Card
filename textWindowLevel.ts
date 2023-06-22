@@ -1,5 +1,4 @@
 export const renderTextLevel = (game:HTMLElement):void  => {
-
     const textLevelHtml = `<div class="level__container">
         <h2 class="level__text">Выбери сложность</h2>
         <form class="level__form">
@@ -20,6 +19,6 @@ export const renderTextLevel = (game:HTMLElement):void  => {
             <button disabled="true" class="start">Старт</button>
         </form>
     </div>`;
-
     game.innerHTML = textLevelHtml;
 };
+
