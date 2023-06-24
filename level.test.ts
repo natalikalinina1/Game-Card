@@ -1,6 +1,25 @@
-export const renderTextLevel = (game) => {
+import { expect, test } from '@jest/globals';
 
-    const textLevelHtml = `<div class="level__container">
+import { renderTextLevel } from './textWindowLevel';
+
+describe('Тестирование функции renderTextLevel', () => {
+  let game: HTMLElement;
+  beforeEach(() => {
+  
+    game = document.createElement('div');
+  });
+
+  test('Функция должна вернуть undefined', () => {
+    
+    expect(renderTextLevel(game)).toBeUndefined();
+  });
+
+  test('Функция должна добавить HTML в переданный элемент', () => {
+   
+    renderTextLevel(game);
+    
+    // Проверяем, что элемент game содержит ранее определенный HTML
+    expect(game.innerHTML).toEqual(`<div class="level__container">
         <h2 class="level__text">Выбери сложность</h2>
         <form class="level__form">
             <div class="level__value-gap">
@@ -19,7 +38,6 @@ export const renderTextLevel = (game) => {
             </div>
             <button disabled="true" class="start">Старт</button>
         </form>
-    </div>`;
-
-    game.innerHTML = textLevelHtml;
-};
+    </div>`);
+  });
+});

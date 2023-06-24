@@ -6,7 +6,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const isProduction = process.env.NODE_ENV === 'production'
 module.exports = {
-    entry: './game-card.js',
+    entry: './game-card.ts',
     mode: isProduction ? 'production' : 'development',
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -16,6 +16,11 @@ module.exports = {
     },
     module: {
         rules: [
+            {
+                test: /\.ts$/,
+                use: "ts-loader",
+                exclude: /node_modules/,
+              },
             {
                 test: /\.css$/,
                 use: [MiniCssExtractPlugin.loader, 'css-loader'],
@@ -28,8 +33,12 @@ module.exports = {
                 test: /\.(woff|woff2|eotIttflotf)$/i,
                 type: 'asset/resource',
             },
+            
         ],
     },
+    resolve: {
+        extensions: [".ts", ".js"],
+      },
     plugins: [
         new HtmlWebpackPlugin({
             template: './index.html',
